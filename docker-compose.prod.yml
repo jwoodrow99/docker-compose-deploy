@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+
+  base:
+    build:
+      context: ./docker
+      dockerfile: base.dockerfile
+
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx.dockerfile
+    restart: "always"
+    ports:
+      - 8000:80
+    volumes:
+      - ./docker/config/nginx/sites/base:/var/www/base
+      - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/
+
+  # pgsql:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: pgsql.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     PGPASSWORD: 'secret'
+  #     POSTGRES_DB: 'base'
+  #     POSTGRES_USER: 'user'
+  #     POSTGRES_PASSWORD: 'secret'
+  #   volumes:
+  #     - './docker/volumes/pgsql/data:/var/lib/postgresql/data'
+
+  # mysql:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: mysql.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - '3306:3306'
+  #   environment:
+  #     MYSQL_DATABASE: 'base'
+  #     MYSQL_ROOT_PASSWORD: 'secret'
+  #   volumes:
+  #     - './docker/volumes/mysql/data:/var/lib/mysql'
+
+  # mariadb:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: mariadb.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - '33066:33066'
+  #   environment:
+  #     MARIADB_DATABASE: 'base'
+  #     MARIADB_ROOT_PASSWORD: 'secret'
+  #   volumes:
+  #     - './docker/volumes/mariadb/data:/var/lib/mysql'
+
+  # mongo:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: mongo.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - '27017:27017'
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: 'root'
+  #     MONGO_INITDB_ROOT_PASSWORD: 'secret'
+  #   volumes:
+  #     - './docker/volumes/mongo/data:/data/db'
