@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
 
-  # base:
-  #   build:
-  #     context: ./docker
-  #     dockerfile: base.dockerfile
+  base:
+    build:
+      context: ./docker
+      dockerfile: base.dockerfile
 
   nginx:
     build:
@@ -13,11 +13,12 @@ services:
       dockerfile: nginx.dockerfile
     restart: "always"
     ports:
-      - 8000:80
+      - 80:80
     volumes:
       - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/:ro
       - ./docker/config/nginx/sites:/var/www
       - ./docker/volumes/certbot:/var/www/certbot/:ro
+      - ./docker/volumes/letsencrypt/:/etc/nginx/ssl/:ro
 
   certbot:
     build:
@@ -25,6 +26,7 @@ services:
       dockerfile: certbot.dockerfile
     volumes:
       - ./docker/volumes/certbot:/var/www/certbot/:rw
+      - ./docker/volumes/letsencrypt/:/etc/letsencrypt/:rw
 
   # pgsql:
   #   build:
