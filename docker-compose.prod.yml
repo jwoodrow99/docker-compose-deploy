@@ -1,4 +1,5 @@
 version: '3.8'
+name: docker-compose-deploy-prod
 
 services:
 
@@ -15,8 +16,16 @@ services:
     ports:
       - 8000:80
     volumes:
-      - ./docker/config/nginx/sites/base:/var/www/base
-      - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/:ro
+      - ./docker/config/nginx/sites:/var/www
+      - ./docker/volumes/certbot:/var/www/certbot/:ro
+
+  certbot:
+    build:
+      context: ./docker
+      dockerfile: certbot.dockerfile
+    volumes:
+      - ./docker/volumes/certbot:/var/www/certbot/:rw
 
   # pgsql:
   #   build:
