@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
 
-  base:
-    build:
-      context: ./docker
-      dockerfile: base.dockerfile
+  # base:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: base.dockerfile
 
   nginx:
     build:
