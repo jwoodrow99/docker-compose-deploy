@@ -14,6 +14,7 @@ services:
     restart: "always"
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/:ro
       - ./docker/config/nginx/sites:/var/www
