@@ -5,23 +5,23 @@ Docker Compose Deploy allows you to easily use docker as both a development envi
 ## Start development environment
 
 ``` bash
-docker-compose -f docker-compose.dev.yml up -d
+docker-compose -f docker-compose.dev.yml up -d --build
 docker-compose -f docker-compose.dev.yml down
 ```
 
 ## Start production environment
 
 ``` bash
-docker-compose -f docker-compose.prod.yml up -d
+docker-compose -f docker-compose.prod.yml up -d --build
 docker-compose -f docker-compose.prod.yml down
 ```
 
 ## Obtaining SSL certificates
 
 ``` bash
-docker-compose -f docker-compose.prod.yml run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d example.org
-docker-compose -f docker-compose.prod.yml run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org
-docker-compose -f docker-compose.prod.yml run --rm certbot renew
+docker exec docker-compose-deploy-base-1 certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d example.org
+docker exec docker-compose-deploy-base-1 certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org
+docker exec docker-compose-deploy-base-1 certbot renew
 ```
 
 ## Update container with no downtime

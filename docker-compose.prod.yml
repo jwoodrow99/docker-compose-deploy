@@ -6,6 +6,9 @@ services:
     build:
       context: ./docker
       dockerfile: base.dockerfile
+    volumes:
+      - ./docker/volumes/certbot:/var/www/certbot/:rw
+      - ./docker/volumes/letsencrypt/:/etc/letsencrypt/:rw
 
   nginx:
     build:
@@ -20,15 +23,7 @@ services:
       - ./docker/config/nginx/sites:/var/www
       - ./docker/volumes/certbot:/var/www/certbot/:ro
       - ./docker/volumes/letsencrypt/:/etc/nginx/ssl/:ro
-
-  certbot:
-    build:
-      context: ./docker
-      dockerfile: certbot.dockerfile
-    volumes:
-      - ./docker/volumes/certbot:/var/www/certbot/:rw
-      - ./docker/volumes/letsencrypt/:/etc/letsencrypt/:rw
-
+    
   # pgsql:
   #   build:
   #     context: ./docker
