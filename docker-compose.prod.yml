@@ -23,6 +23,39 @@ services:
       - ./docker/config/nginx/sites:/var/www
       - ./docker/volumes/certbot:/var/www/certbot/:ro
       - ./docker/volumes/letsencrypt/:/etc/nginx/ssl/:ro
+
+  mailserver:
+    build:
+      context: ./docker
+      dockerfile: mailserver.dockerfile
+    # If the FQDN for your mail-server is only two labels (eg: example.com),
+    # you can assign this entirely to `hostname` and remove `domainname`.
+    hostname: mail
+    domainname: example.com
+    env_file: ./docker/config/mailserver/mailserver.env
+    # More information about the mail-server ports:
+    # https://docker-mailserver.github.io/docker-mailserver/edge/config/security/understanding-the-ports/
+    # To avoid conflicts with yaml base-60 float, DO NOT remove the quotation marks.
+    ports:
+      - "25:25"    # SMTP  (explicit TLS => STARTTLS)
+      - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
+      - "465:465"  # ESMTP (implicit TLS)
+      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
+      - "993:993"  # IMAP4 (implicit TLS)
+    volumes:
+      - ./docker/volumes/mailserver/mail-data/:/var/mail/
+      - ./docker/volumes/mailserver/mail-state/:/var/mail-state/
+      - ./docker/volumes/mailserver/mail-logs/:/var/log/mail/
+      - ./docker/config/mailserver/config/:/tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    stop_grace_period: 1m
+    cap_add:
+      - NET_ADMIN
+    healthcheck:
+      test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
+      timeout: 3s
+      retries: 0
     
   # pgsql:
   #   build:
