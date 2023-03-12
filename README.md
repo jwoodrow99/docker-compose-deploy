@@ -19,19 +19,19 @@ docker-compose -f docker-compose.prod.yml down
 ## Obtaining SSL certificates
 
 ``` bash
-docker exec docker-compose-deploy-base-1 certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d example.org
-docker exec docker-compose-deploy-base-1 certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org
-docker exec docker-compose-deploy-base-1 certbot renew
+docker exec -i docker-compose-deploy-base-1 certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d example.org
+docker exec -i docker-compose-deploy-base-1 certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org
+docker exec -i docker-compose-deploy-base-1 certbot renew
 ```
 
 ## Update container with no downtime
 
 ``` bash
 # Scale up php to two containers and reload Nginx
-docker-compose -f docker-compose.dev.yml up -d --no-deps --scale nginx=2 --no-recreate nginx
-docker exec docker-compose-deploy-dev-nginx-1 nginx -s reload
+docker-compose -f docker-compose.prod.yml up -d --no-deps --scale nginx=2 --no-recreate nginx
+docker exec docker-compose-deploy-nginx-1 nginx -s reload
 
 # Scale down to single container removing old and reload Nginx again
-docker-compose -f docker-compose.dev.yml up -d --no-deps --scale nginx=1 --no-recreate nginx
-docker exec docker-compose-deploy-dev-nginx-1 nginx -s reload
+docker-compose -f docker-compose.prod.yml up -d --no-deps --scale nginx=1 --no-recreate nginx
+docker exec docker-compose-deploy-nginx-1 nginx -s reload
 ```
