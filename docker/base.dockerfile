@@ -4,7 +4,7 @@ RUN apk add --update python3 py3-pip
 RUN apk add certbot
 
 # Copy cron file to the container
-COPY config/cron/cron /etc/cron.d/cron
+COPY config/base/cron/cron /etc/cron.d/cron
 
 # Give the permission
 RUN chmod 0644 /etc/cron.d/cron
