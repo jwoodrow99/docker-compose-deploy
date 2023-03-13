@@ -14,8 +14,7 @@ server {
     # }
 
     location / {
-      root /var/www/base;
-      index index.html;
+      proxy_pass http://ruby:9000;
     }
 }
 
@@ -23,14 +22,14 @@ server {
 #     listen 443 default_server ssl http2;
 #     listen [::]:443 ssl http2;
 
-#     server_name <domain>;
+#     server_name examle.com;
+#     server_tokens off;
 
 #     ssl_certificate /etc/nginx/ssl/live/<domain>/fullchain.pem;
 #     ssl_certificate_key /etc/nginx/ssl/live/<domain>/privkey.pem;
 #     ssl_protocols TLSv1.2 TLSv1.3;
     
-#     location / {
-#       root /var/www/base;
-#       index index.html;
+#      location / {
+#       proxy_pass https://ruby:9000;
 #     }
 # }

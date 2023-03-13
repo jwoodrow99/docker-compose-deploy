@@ -99,3 +99,25 @@ docker exec docker-compose-deploy_nginx_1 nginx -s reload
 docker-compose -f docker-compose.prod.yml up -d --no-deps --scale php=1 --no-recreate php
 docker exec docker-compose-deploy_nginx_1 nginx -s reload
 ```
+
+## Application Configs
+
+By default we have only Nginx enabled, serving a static html file. Other services can be enabled with very minimal configuration changes. Most basic configurations are built and simply require to be enabled by uncommenting. All of our application containers are routed through Nginx, thus we have separate Nginx .conf files for each application container. Below we outline the process of how to enable different application level containers.
+
+### WordPress
+
+1. In the docker-compose file only the nginx, wordpress and mysql containers should be enabled.
+2. The WordPress volume will need to be mounted to Nginx ```./docker/volumes/wordpress/data:/var/www/html```.
+3. The ```base.conf``` fine needs to be removed or commented out and the ```wordpress.conf``` file must be enabled.
+
+### PHP
+
+1. In the docker-compose file only the nginx, wordpress and mysql containers should be enabled.
+2. The WordPress volume will need to be mounted to Nginx ```./docker/config/nginx/sites/php:/var/www/php```.
+3. The ```base.conf``` fine needs to be removed or commented out and the ```php.conf``` file must be enabled.
+
+### Node
+
+### Python
+
+### Ruby

@@ -8,19 +8,69 @@ services:
       dockerfile: nginx.dockerfile
     restart: "always"
     ports:
-      - 8000:80
+      - 8080:80
     volumes:
-      - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/:ro
-      - ./docker/config/nginx/sites:/var/www
+      - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/config/nginx/sites/base:/var/www/base
 
-  mailserver:
-    build:
-      context: ./docker
-      dockerfile: mailhog.dockerfile
-    restart: "always"
-    ports:
-      - "1025:1025"
-      - "8025:8025"
+  # mailserver:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: mailhog.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - "1025:1025"
+  #     - "8025:8025"
+
+  # ruby:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: ruby.dockerfile
+  #   restart: "always"
+  #   expose:
+  #     - 9000
+
+  # python:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: python.dockerfile
+  #   restart: "always"
+  #   expose:
+  #     - 9000
+
+  # node:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: node.dockerfile
+  #   restart: "always"
+  #   expose:
+  #     - 9000
+
+  # php:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: php.dockerfile
+  #   restart: "always"
+  #   expose:
+  #     - 9000
+  #   volumes:
+  #     - ./docker/config/nginx/sites/php:/var/www/php
+  #     - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+
+  # wordpress:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: wordpress.dockerfile
+  #   restart: "always"
+  #   expose:
+  #     - 9000
+  #   environment:
+  #     WORDPRESS_DB_HOST: mysql
+  #     WORDPRESS_DB_USER: user
+  #     WORDPRESS_DB_PASSWORD: secret
+  #     WORDPRESS_DB_NAME: base
+  #   volumes:
+  #     - ./docker/volumes/wordpress/data:/var/www/html
     
   # pgsql:
   #   build:
@@ -47,6 +97,8 @@ services:
   #   environment:
   #     MYSQL_DATABASE: 'base'
   #     MYSQL_ROOT_PASSWORD: 'secret'
+  #     MYSQL_USER: 'user'
+  #     MYSQL_PASSWORD: 'secret'
   #   volumes:
   #     - './docker/volumes/mysql/data:/var/lib/mysql'
 
@@ -75,3 +127,13 @@ services:
   #     MONGO_INITDB_ROOT_PASSWORD: 'secret'
   #   volumes:
   #     - './docker/volumes/mongo/data:/data/db'
+
+  # redis:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: mongo.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - 6379:6379
+  #   volumes: 
+  #     - ./docker/volumes/redis/data:/data

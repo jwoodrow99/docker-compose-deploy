@@ -106,3 +106,13 @@ services:
   #     MONGO_INITDB_ROOT_PASSWORD: 'secret'
   #   volumes:
   #     - './docker/volumes/mongo/data:/data/db'
+
+  # redis:
+  #   build:
+  #     context: ./docker
+  #     dockerfile: mongo.dockerfile
+  #   restart: "always"
+  #   ports:
+  #     - 6379:6379
+  #   volumes: 
+  #     - ./docker/volumes/redis/data:/data
