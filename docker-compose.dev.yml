@@ -13,7 +13,7 @@ services:
       - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/:ro
       - ./docker/config/nginx/sites:/var/www
 
-  mailhog:
+  mailserver:
     build:
       context: ./docker
       dockerfile: mailhog.dockerfile
