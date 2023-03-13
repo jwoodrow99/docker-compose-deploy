@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
 
-  base:
+  maintenance:
     build:
       context: ./docker
-      dockerfile: base.dockerfile
+      dockerfile: maintenance.dockerfile
     volumes:
       - ./docker/volumes/certbot:/var/certbot/
       - ./docker/volumes/letsencrypt/:/etc/letsencrypt/
